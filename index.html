@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Transformadores Silva</title>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background-color: #f4f4f4;
+}
+
+header {
+    background: #0d47a1;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+nav {
+    background: #1565c0;
+    padding: 10px;
+    text-align: center;
+}
+
+nav a {
+    color: white;
+    margin: 15px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.container {
+    padding: 20px;
+}
+
+.produtos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.card {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.preco {
+    font-size: 18px;
+    color: #0d47a1;
+    font-weight: bold;
+}
+
+.botao {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 15px;
+    background: #25D366;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+footer {
+    background: #0d47a1;
+    color: white;
+    text-align: center;
+    padding: 15px;
+    margin-top: 20px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>Transformadores Silva</h1>
+    <p>Especialistas em Transformadores Industriais</p>
+    <p>📞 (11) 99999-9999</p>
+    <p>📍 Rua Exemplo, 123 - Centro - São Paulo/SP</p>
+</header>
+
+<nav>
+    <a href="#produtos">Produtos</a>
+    <a href="#contato">Contato</a>
+</nav>
+
+<div class="container">
+
+    <h2 id="produtos">Nossos Produtos</h2>
+
+    <div class="produtos">
+
+        <div class="card">
+            <img src="https://via.placeholder.com/300x200" alt="Transformador 10kVA">
+            <h3>Transformador 10kVA</h3>
+            <p>Monofásico 220V / 110V</p>
+            <p class="preco">R$ 1.250,00</p>
+            <a class="botao" href="https://wa.me/5511999999999?text=Olá,%20tenho%20interesse%20no%20Transformador%2010kVA" target="_blank">
+                Comprar pelo WhatsApp
+            </a>
+        </div>
+
+        <div class="card">
+            <img src="https://via.placeholder.com/300x200" alt="Transformador 20kVA">
+            <h3>Transformador 20kVA</h3>
+            <p>Trifásico 380V / 220V</p>
+            <p class="preco">R$ 2.890,00</p>
+            <a class="botao" href="https://wa.me/5511999999999?text=Olá,%20tenho%20interesse%20no%20Transformador%2020kVA" target="_blank">
+                Comprar pelo WhatsApp
+            </a>
+        </div>
+
+        <div class="card">
+            <img src="https://via.placeholder.com/300x200" alt="Transformador 30kVA">
+            <h3>Transformador 30kVA</h3>
+            <p>Industrial Alta Performance</p>
+            <p class="preco">R$ 4.500,00</p>
+            <a class="botao" href="https://wa.me/5511999999999?text=Olá,%20tenho%20interesse%20no%20Transformador%2030kVA" target="_blank">
+                Comprar pelo WhatsApp
+            </a>
+        </div>
+
+    </div>
+
+</div>
+
+<footer id="contato">
+    <p>© 2026 Transformadores Silva</p>
+    <p>WhatsApp: (11) 99999-9999</p>
+</footer>
+
+</body>
+</html>
