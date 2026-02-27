@@ -1,146 +1,550 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Transformadores Silva</title>
-
+<title>VoltCore — Transformadores Elétricos</title>
 <style>
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    background-color: #f4f4f4;
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Barlow:wght@300;400;500&family=Barlow+Condensed:wght@700;800&display=swap');
+
+:root {
+  --bg:     #080b10;
+  --bg2:    #0c1018;
+  --panel:  #111825;
+  --border: #1e2d42;
+  --neon:   #00d4ff;
+  --orange: #ff6b00;
+  --green:  #00ff88;
+  --text:   #c8d8e8;
+  --dim:    #4a6278;
+  --white:  #f0f8ff;
 }
 
-header {
-    background: #0d47a1;
-    color: white;
-    padding: 20px;
-    text-align: center;
-}
+* { box-sizing: border-box; margin: 0; padding: 0; scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--text); font-family: 'Barlow', sans-serif; overflow-x: hidden; }
 
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: linear-gradient(180deg, var(--neon), var(--orange)); border-radius: 2px; }
+
+/* ── NAV ── */
 nav {
-    background: #1565c0;
-    padding: 10px;
-    text-align: center;
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 48px; height: 68px;
+  background: rgba(8,11,16,0.92);
+  border-bottom: 1px solid rgba(0,212,255,0.12);
+  backdrop-filter: blur(12px);
 }
+.nav-logo { font-family: 'Barlow Condensed', sans-serif; font-size: 26px; font-weight: 800; letter-spacing: 4px; color: var(--white); text-transform: uppercase; }
+.nav-logo span { color: var(--neon); }
+.nav-links { display: flex; gap: 36px; }
+.nav-links a { font-family: 'Rajdhani', sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--dim); text-decoration: none; transition: color 0.2s; }
+.nav-links a:hover { color: var(--neon); }
+.nav-cta { background: transparent; border: 1px solid var(--orange); color: var(--orange); font-family: 'Rajdhani', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; padding: 10px 24px; cursor: pointer; transition: all 0.2s; }
+.nav-cta:hover { background: var(--orange); color: #000; box-shadow: 0 0 24px rgba(255,107,0,0.5); }
 
-nav a {
-    color: white;
-    margin: 15px;
-    text-decoration: none;
-    font-weight: bold;
-}
+/* ── HERO ── */
+.hero { min-height: 100vh; display: flex; align-items: center; position: relative; overflow: hidden; padding: 120px 48px 80px; }
+.hero-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(0,212,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(0,212,255,0.04) 1px, transparent 1px); background-size: 60px 60px; animation: gridMove 20s linear infinite; }
+@keyframes gridMove { 0%{transform:translateY(0)} 100%{transform:translateY(60px)} }
+.hero-orb { position: absolute; top: 10%; right: -5%; width: 600px; height: 600px; border-radius: 50%; background: radial-gradient(circle, rgba(0,212,255,0.08) 0%, transparent 70%); animation: orbPulse 6s ease-in-out infinite; }
+.hero-orb2 { position: absolute; bottom: -10%; left: -5%; width: 500px; height: 500px; border-radius: 50%; background: radial-gradient(circle, rgba(255,107,0,0.10) 0%, transparent 70%); }
+@keyframes orbPulse { 0%,100%{transform:scale(1);opacity:0.6} 50%{transform:scale(1.1);opacity:1} }
+.hero-content { position: relative; z-index: 1; max-width: 680px; }
+.hero-tag { display: inline-flex; align-items: center; gap: 8px; font-family: 'Rajdhani', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--neon); border: 1px solid rgba(0,212,255,0.3); padding: 6px 16px; border-radius: 2px; margin-bottom: 28px; animation: fadeUp 0.8s ease both; }
+.hero-tag::before { content: ''; width: 6px; height: 6px; background: var(--neon); border-radius: 50%; animation: blink 1.5s ease-in-out infinite; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
+.hero-title { font-family: 'Barlow Condensed', sans-serif; font-size: clamp(52px,8vw,96px); font-weight: 800; line-height: 0.9; text-transform: uppercase; color: var(--white); margin-bottom: 8px; animation: fadeUp 0.8s 0.1s ease both; }
+.hero-title span { color: var(--neon); display: block; }
+.hero-subtitle { font-size: clamp(18px,2.5vw,26px); font-weight: 300; color: var(--dim); letter-spacing: 1px; margin-bottom: 24px; animation: fadeUp 0.8s 0.2s ease both; }
+.hero-desc { font-size: 16px; line-height: 1.7; color: var(--text); max-width: 520px; margin-bottom: 44px; animation: fadeUp 0.8s 0.3s ease both; }
+.hero-btns { display: flex; gap: 16px; flex-wrap: wrap; animation: fadeUp 0.8s 0.4s ease both; }
+.btn-hero-primary { background: var(--neon); color: #000; font-family: 'Rajdhani', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; padding: 16px 36px; border: none; cursor: pointer; transition: all 0.2s; box-shadow: 0 0 30px rgba(0,212,255,0.4); }
+.btn-hero-primary:hover { box-shadow: 0 0 50px rgba(0,212,255,0.7); transform: translateY(-2px); }
+.btn-hero-secondary { background: transparent; border: 1px solid var(--border); color: var(--text); font-family: 'Rajdhani', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; padding: 16px 36px; cursor: pointer; transition: all 0.2s; }
+.btn-hero-secondary:hover { border-color: var(--orange); color: var(--orange); }
+@keyframes fadeUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
 
-.container {
-    padding: 20px;
-}
+/* hero visual */
+.hero-visual { position: absolute; right: 5%; top: 50%; transform: translateY(-50%); width: 420px; display: none; }
+@media(min-width: 1100px) { .hero-visual { display: block; } }
+.transformer-svg { width: 100%; opacity: 0.85; filter: drop-shadow(0 0 30px rgba(0,212,255,0.3)); animation: float 5s ease-in-out infinite; }
+@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-16px)} }
 
-.produtos {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
-}
+/* ── SECTIONS SHARED ── */
+section { padding: 100px 48px; }
+.section-tag { font-family: 'Rajdhani', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--neon); margin-bottom: 12px; }
+.section-tag.orange { color: var(--orange); }
+.section-title { font-family: 'Barlow Condensed', sans-serif; font-size: clamp(36px,5vw,60px); font-weight: 800; text-transform: uppercase; color: var(--white); line-height: 1; margin-bottom: 16px; }
+.section-title span { color: var(--neon); }
+.section-title span.o { color: var(--orange); }
+.section-desc { font-size: 16px; line-height: 1.7; color: var(--dim); max-width: 560px; }
 
-.card {
-    background: white;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    text-align: center;
-}
+/* ── FEATURES ── */
+.features { background: var(--bg2); }
+.features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap: 24px; margin-top: 56px; }
+.feature-card { background: var(--panel); border: 1px solid var(--border); padding: 32px 28px; position: relative; overflow: hidden; transition: transform 0.3s, border-color 0.3s; }
+.feature-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--neon); transform: scaleX(0); transition: transform 0.3s; transform-origin: left; }
+.feature-card:nth-child(2)::before,
+.feature-card:nth-child(5)::before { background: var(--orange); }
+.feature-card:hover { transform: translateY(-4px); border-color: rgba(0,212,255,0.3); }
+.feature-card:nth-child(2):hover,
+.feature-card:nth-child(5):hover { border-color: rgba(255,107,0,0.3); }
+.feature-card:hover::before { transform: scaleX(1); }
+.feature-icon { font-size: 32px; margin-bottom: 16px; filter: drop-shadow(0 0 8px rgba(0,212,255,0.4)); }
+.feature-title { font-family: 'Rajdhani', sans-serif; font-size: 18px; font-weight: 700; letter-spacing: 1px; color: var(--white); margin-bottom: 10px; }
+.feature-text { font-size: 14px; line-height: 1.7; color: var(--dim); }
 
-.card img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-    border-radius: 5px;
-}
+/* ── PRODUCTS ── */
+.products { background: var(--bg); }
+.products-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px,1fr)); gap: 28px; margin-top: 56px; }
+.product-card { background: var(--panel); border: 1px solid var(--border); overflow: hidden; transition: all 0.3s; position: relative; }
+.product-card:hover { border-color: rgba(0,212,255,0.4); box-shadow: 0 20px 60px rgba(0,0,0,0.4); transform: translateY(-6px); }
+.product-card.featured { border-color: rgba(0,212,255,0.4); box-shadow: 0 0 40px rgba(0,212,255,0.1); }
+.product-badge { position: absolute; top: 16px; right: 16px; background: var(--orange); color: #fff; font-family: 'Rajdhani', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; padding: 4px 12px; }
+.product-visual { height: 180px; background: linear-gradient(135deg, #0d1825 0%, #111e2e 100%); display: flex; align-items: center; justify-content: center; font-size: 72px; border-bottom: 1px solid var(--border); position: relative; overflow: hidden; }
+.product-visual::after { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at center, rgba(0,212,255,0.08) 0%, transparent 70%); }
+.product-body { padding: 24px; }
+.product-name { font-family: 'Barlow Condensed', sans-serif; font-size: 22px; font-weight: 800; text-transform: uppercase; color: var(--white); margin-bottom: 6px; }
+.product-desc { font-size: 13px; color: var(--dim); line-height: 1.6; margin-bottom: 20px; }
+.product-specs { display: flex; flex-direction: column; gap: 8px; margin-bottom: 24px; }
+.spec-row { display: flex; justify-content: space-between; align-items: center; }
+.spec-label { font-family: 'Rajdhani', sans-serif; font-size: 11px; letter-spacing: 1px; text-transform: uppercase; color: var(--dim); }
+.spec-value { font-family: 'Rajdhani', sans-serif; font-size: 13px; font-weight: 600; color: var(--neon); }
+.product-divider { height: 1px; background: var(--border); margin: 16px 0; }
+.product-price { display: flex; align-items: baseline; gap: 8px; margin-bottom: 20px; }
+.price-label { font-size: 11px; letter-spacing: 1px; text-transform: uppercase; color: var(--dim); }
+.price-value { font-family: 'Barlow Condensed', sans-serif; font-size: 22px; font-weight: 800; color: var(--orange); letter-spacing: 1px; }
+.btn-product { width: 100%; background: transparent; border: 1px solid var(--neon); color: var(--neon); font-family: 'Rajdhani', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; padding: 12px; cursor: pointer; transition: all 0.2s; }
+.btn-product:hover { background: var(--neon); color: #000; box-shadow: 0 0 24px rgba(0,212,255,0.4); }
+.product-card.featured .btn-product { background: var(--neon); color: #000; }
+.product-card.featured .btn-product:hover { box-shadow: 0 0 40px rgba(0,212,255,0.6); }
 
-.preco {
-    font-size: 18px;
-    color: #0d47a1;
-    font-weight: bold;
-}
+/* ── SPECS TABLE ── */
+.specs-section { background: var(--bg2); }
+.specs-table { width: 100%; margin-top: 48px; border-collapse: collapse; }
+.specs-table th { border: 1px solid var(--border); padding: 14px 20px; font-family: 'Rajdhani', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; text-align: left; }
+.specs-table th:nth-child(odd) { background: rgba(255,107,0,0.07); color: var(--orange); }
+.specs-table th:nth-child(even) { background: rgba(0,212,255,0.06); color: var(--neon); }
+.specs-table td { border: 1px solid var(--border); padding: 14px 20px; font-size: 14px; color: var(--text); }
+.specs-table tr:hover td { background: rgba(0,212,255,0.03); }
+.specs-table td:first-child { font-family: 'Rajdhani', sans-serif; font-weight: 600; color: var(--white); letter-spacing: 1px; }
 
-.botao {
-    display: inline-block;
-    margin-top: 10px;
-    padding: 10px 15px;
-    background: #25D366;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-}
+/* ── CONTACT ── */
+.contact { background: var(--bg); }
+.contact-wrapper { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; margin-top: 56px; align-items: start; }
+@media(max-width: 768px) { .contact-wrapper { grid-template-columns: 1fr; } }
+.contact-info { display: flex; flex-direction: column; gap: 28px; }
+.contact-item { display: flex; gap: 16px; align-items: flex-start; }
+.contact-icon { width: 44px; height: 44px; flex-shrink: 0; border: 1px solid rgba(0,212,255,0.3); display: flex; align-items: center; justify-content: center; font-size: 18px; background: rgba(0,212,255,0.05); }
+.contact-icon.wa { background: rgba(37,211,102,0.1); border-color: rgba(37,211,102,0.3); }
+.contact-item-title { font-family: 'Rajdhani', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--orange); margin-bottom: 4px; }
+.contact-item-title.wa { color: #25d366; }
+.contact-item-text { font-size: 15px; color: var(--text); line-height: 1.5; }
+.form { display: flex; flex-direction: column; gap: 16px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media(max-width: 500px) { .form-row { grid-template-columns: 1fr; } }
+.form-group { display: flex; flex-direction: column; gap: 6px; }
+.form-label { font-family: 'Rajdhani', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--dim); }
+.form-input, .form-select, .form-textarea { background: var(--panel); border: 1px solid var(--border); color: var(--text); font-family: 'Barlow', sans-serif; font-size: 14px; padding: 12px 16px; transition: border-color 0.2s; outline: none; width: 100%; }
+.form-input:focus, .form-select:focus, .form-textarea:focus { border-color: var(--neon); box-shadow: 0 0 0 2px rgba(0,212,255,0.1); }
+.form-select { cursor: pointer; }
+.form-select option { background: var(--panel); }
+.form-textarea { resize: vertical; min-height: 120px; }
+.form-submit { background: var(--neon); color: #000; font-family: 'Rajdhani', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; padding: 16px 32px; border: none; cursor: pointer; transition: all 0.2s; margin-top: 8px; box-shadow: 0 0 24px rgba(0,212,255,0.3); }
+.form-submit:hover { box-shadow: 0 0 40px rgba(0,212,255,0.6); transform: translateY(-2px); }
+.form-success { display: none; background: rgba(0,255,136,0.08); border: 1px solid rgba(0,255,136,0.3); padding: 20px 24px; font-family: 'Rajdhani', sans-serif; font-size: 14px; letter-spacing: 1px; color: var(--green); }
 
-footer {
-    background: #0d47a1;
-    color: white;
-    text-align: center;
-    padding: 15px;
-    margin-top: 20px;
+/* ── FOOTER ── */
+footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 40px 48px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
+.footer-logo { font-family: 'Barlow Condensed', sans-serif; font-size: 22px; font-weight: 800; letter-spacing: 4px; text-transform: uppercase; color: var(--white); }
+.footer-logo span { color: var(--neon); }
+.footer-line { font-family: 'Rajdhani', sans-serif; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--dim); }
+
+/* ── WHATSAPP FLOAT ── */
+.wa-float { position: fixed; bottom: 28px; right: 28px; z-index: 999; display: flex; align-items: center; gap: 10px; background: #25d366; color: #fff; font-family: 'Rajdhani', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 14px 22px; border-radius: 50px; text-decoration: none; box-shadow: 0 6px 30px rgba(37,211,102,0.4); transition: all 0.3s; animation: waBounce 2s ease-in-out infinite; }
+.wa-float:hover { transform: scale(1.06) !important; box-shadow: 0 8px 40px rgba(37,211,102,0.6); animation: none; }
+@keyframes waBounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)} }
+
+/* ── RESPONSIVE ── */
+@media(max-width: 768px) {
+  nav { padding: 0 20px; }
+  .nav-links { display: none; }
+  .hero { padding: 100px 20px 60px; }
+  section { padding: 70px 20px; }
+  footer { padding: 30px 20px; flex-direction: column; align-items: flex-start; }
 }
 </style>
 </head>
-
 <body>
 
-<header>
-    <h1>Transformadores Silva</h1>
-    <p>Especialistas em Transformadores Industriais</p>
-    <p>📞 (11) 99999-9999</p>
-    <p>📍 Rua Exemplo, 123 - Centro - São Paulo/SP</p>
-</header>
-
+<!-- NAV -->
 <nav>
+  <div class="nav-logo">VOLT<span>CORE</span></div>
+  <div class="nav-links">
     <a href="#produtos">Produtos</a>
+    <a href="#diferenciais">Diferenciais</a>
+    <a href="#especificacoes">Especificações</a>
     <a href="#contato">Contato</a>
+  </div>
+  <button class="nav-cta" onclick="document.getElementById('contato').scrollIntoView({behavior:'smooth'})">Solicitar Orçamento</button>
 </nav>
 
-<div class="container">
+<!-- HERO -->
+<section class="hero" id="inicio">
+  <div class="hero-grid"></div>
+  <div class="hero-orb"></div>
+  <div class="hero-orb2"></div>
 
-    <h2 id="produtos">Nossos Produtos</h2>
+  <div class="hero-content">
+    <div class="hero-tag">Tecnologia de Alta Performance</div>
+    <h1 class="hero-title">
+      Transformadores
+      <span>Elétricos</span>
+    </h1>
+    <p class="hero-subtitle">Potência. Precisão. Confiabilidade.</p>
+    <p class="hero-desc">
+      Soluções em transformadores elétricos para aplicações industriais e residenciais.
+      Fabricados com os mais altos padrões de qualidade, garantindo segurança e eficiência energética superior.
+    </p>
+    <div class="hero-btns">
+      <button class="btn-hero-primary" onclick="document.getElementById('produtos').scrollIntoView({behavior:'smooth'})">Ver Produtos</button>
+      <button class="btn-hero-secondary" onclick="document.getElementById('contato').scrollIntoView({behavior:'smooth'})">Solicitar Orçamento</button>
+    </div>
+  </div>
 
-    <div class="produtos">
+  <div class="hero-visual">
+    <svg class="transformer-svg" viewBox="0 0 400 460" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="60" y="380" width="280" height="40" rx="3" fill="#111825" stroke="#1e2d42" stroke-width="1.5"/>
+      <rect x="80" y="390" width="240" height="20" rx="2" fill="#0d1520"/>
+      <rect x="80" y="415" width="40" height="25" rx="2" fill="#0d1520" stroke="#1e2d42" stroke-width="1"/>
+      <rect x="280" y="415" width="40" height="25" rx="2" fill="#0d1520" stroke="#1e2d42" stroke-width="1"/>
+      <rect x="50" y="140" width="300" height="245" rx="4" fill="#111825" stroke="#1e2d42" stroke-width="1.5"/>
+      <rect x="78" y="165" width="72" height="195" rx="3" fill="#0c1520" stroke="#1e2d42" stroke-width="1"/>
+      <rect x="252" y="165" width="72" height="195" rx="3" fill="#0c1520" stroke="#1e2d42" stroke-width="1"/>
+      <rect x="90" y="180" width="48" height="165" rx="2" fill="#0a1018" stroke="rgba(0,212,255,0.25)" stroke-width="1"/>
+      <rect x="264" y="180" width="48" height="165" rx="2" fill="#0a1018" stroke="rgba(0,212,255,0.25)" stroke-width="1"/>
+      <line x1="90" y1="195" x2="138" y2="195" stroke="rgba(0,212,255,0.4)" stroke-width="1.5"/>
+      <line x1="90" y1="205" x2="138" y2="205" stroke="rgba(0,212,255,0.4)" stroke-width="1.5"/>
+      <line x1="90" y1="215" x2="138" y2="215" stroke="rgba(0,212,255,0.4)" stroke-width="1.5"/>
+      <line x1="90" y1="225" x2="138" y2="225" stroke="rgba(0,212,255,0.4)" stroke-width="1.5"/>
+      <line x1="90" y1="235" x2="138" y2="235" stroke="rgba(0,212,255,0.4)" stroke-width="1.5"/>
+      <line x1="90" y1="245" x2="138" y2="245" stroke="rgba(0,212,255,0.4)" stroke-width="1.5"/>
+      <line x1="90" y1="255" x2="138" y2="255" stroke="rgba(255,107,0,0.5)" stroke-width="1.5"/>
+      <line x1="90" y1="265" x2="138" y2="265" stroke="rgba(255,107,0,0.5)" stroke-width="1.5"/>
+      <line x1="90" y1="275" x2="138" y2="275" stroke="rgba(255,107,0,0.5)" stroke-width="1.5"/>
+      <line x1="90" y1="285" x2="138" y2="285" stroke="rgba(255,107,0,0.5)" stroke-width="1.5"/>
+      <line x1="90" y1="295" x2="138" y2="295" stroke="rgba(255,107,0,0.5)" stroke-width="1.5"/>
+      <line x1="90" y1="305" x2="138" y2="305" stroke="rgba(255,107,0,0.5)" stroke-width="1.5"/>
+      <line x1="90" y1="315" x2="138" y2="315" stroke="rgba(0,212,255,0.3)" stroke-width="1.5"/>
+      <line x1="90" y1="325" x2="138" y2="325" stroke="rgba(0,212,255,0.3)" stroke-width="1.5"/>
+      <line x1="90" y1="335" x2="138" y2="335" stroke="rgba(0,212,255,0.3)" stroke-width="1.5"/>
+      <line x1="264" y1="195" x2="312" y2="195" stroke="rgba(0,212,255,0.4)" stroke-width="1.5"/>
+      <line x1="264" y1="205" x2="312" y2="205" stroke="rgba(0,212,255,0.4)" stroke-width="1.5"/>
+      <line x1="264" y1="215" x2="312" y2="215" stroke="rgba(0,212,255,0.4)" stroke-width="1.5"/>
+      <line x1="264" y1="225" x2="312" y2="225" stroke="rgba(0,212,255,0.4)" stroke-width="1.5"/>
+      <line x1="264" y1="235" x2="312" y2="235" stroke="rgba(0,212,255,0.4)" stroke-width="1.5"/>
+      <line x1="264" y1="245" x2="312" y2="245" stroke="rgba(0,212,255,0.4)" stroke-width="1.5"/>
+      <line x1="264" y1="255" x2="312" y2="255" stroke="rgba(255,107,0,0.5)" stroke-width="1.5"/>
+      <line x1="264" y1="265" x2="312" y2="265" stroke="rgba(255,107,0,0.5)" stroke-width="1.5"/>
+      <line x1="264" y1="275" x2="312" y2="275" stroke="rgba(255,107,0,0.5)" stroke-width="1.5"/>
+      <line x1="264" y1="285" x2="312" y2="285" stroke="rgba(255,107,0,0.5)" stroke-width="1.5"/>
+      <line x1="264" y1="295" x2="312" y2="295" stroke="rgba(255,107,0,0.5)" stroke-width="1.5"/>
+      <line x1="264" y1="305" x2="312" y2="305" stroke="rgba(255,107,0,0.5)" stroke-width="1.5"/>
+      <line x1="264" y1="315" x2="312" y2="315" stroke="rgba(0,212,255,0.3)" stroke-width="1.5"/>
+      <line x1="264" y1="325" x2="312" y2="325" stroke="rgba(0,212,255,0.3)" stroke-width="1.5"/>
+      <line x1="264" y1="335" x2="312" y2="335" stroke="rgba(0,212,255,0.3)" stroke-width="1.5"/>
+      <rect x="160" y="155" width="80" height="215" rx="2" fill="#0d1825" stroke="rgba(0,212,255,0.15)" stroke-width="1"/>
+      <rect x="130" y="100" width="20" height="48" rx="3" fill="#111825" stroke="rgba(0,212,255,0.4)" stroke-width="1.5"/>
+      <rect x="190" y="90" width="20" height="58" rx="3" fill="#111825" stroke="rgba(255,107,0,0.6)" stroke-width="1.5"/>
+      <rect x="250" y="100" width="20" height="48" rx="3" fill="#111825" stroke="rgba(0,212,255,0.4)" stroke-width="1.5"/>
+      <ellipse cx="140" cy="100" rx="13" ry="6" fill="#0a1018" stroke="rgba(0,212,255,0.6)" stroke-width="1.5"/>
+      <ellipse cx="200" cy="90" rx="13" ry="6" fill="#0a1018" stroke="rgba(255,107,0,0.9)" stroke-width="2"/>
+      <ellipse cx="260" cy="100" rx="13" ry="6" fill="#0a1018" stroke="rgba(0,212,255,0.6)" stroke-width="1.5"/>
+      <ellipse cx="200" cy="90" rx="13" ry="6" fill="rgba(255,107,0,0.2)"/>
+      <rect x="155" y="230" width="90" height="50" rx="2" fill="#0a1018" stroke="rgba(0,212,255,0.2)" stroke-width="1"/>
+      <text x="200" y="250" text-anchor="middle" font-family="monospace" font-size="9" fill="rgba(0,212,255,0.6)" letter-spacing="2">VOLTCORE</text>
+      <text x="200" y="268" text-anchor="middle" font-family="monospace" font-size="8" fill="rgba(255,107,0,0.5)" letter-spacing="1">VC-3000</text>
+      <ellipse cx="200" cy="260" rx="120" ry="60" fill="rgba(0,212,255,0.03)"/>
+    </svg>
+  </div>
+</section>
 
-        <div class="card">
-            <img src="https://via.placeholder.com/300x200" alt="Transformador 10kVA">
-            <h3>Transformador 10kVA</h3>
-            <p>Monofásico 220V / 110V</p>
-            <p class="preco">R$ 1.250,00</p>
-            <a class="botao" href="https://wa.me/5511999999999?text=Olá,%20tenho%20interesse%20no%20Transformador%2010kVA" target="_blank">
-                Comprar pelo WhatsApp
-            </a>
+<!-- DIFERENCIAIS -->
+<section class="features" id="diferenciais">
+  <div class="section-tag">Por que escolher a VoltCore</div>
+  <h2 class="section-title">Nossos <span>Diferenciais</span></h2>
+  <p class="section-desc">Comprometidos com a excelência em cada transformador que fabricamos e entregamos.</p>
+  <div class="features-grid">
+    <div class="feature-card"><div class="feature-icon">⚡</div><div class="feature-title">Alta Eficiência Energética</div><div class="feature-text">Núcleos de grão orientado com perdas mínimas. Eficiência superior a 98% em toda a linha de produtos, reduzindo custos operacionais.</div></div>
+    <div class="feature-card"><div class="feature-icon">🛡️</div><div class="feature-title">Proteção Total</div><div class="feature-text">Sistema de proteção contra sobretensão, sobrecarga e curto-circuito. Isolamento classe H para operação em ambientes severos.</div></div>
+    <div class="feature-card"><div class="feature-icon">🔧</div><div class="feature-title">Fabricação Sob Medida</div><div class="feature-text">Desenvolvimento de transformadores customizados para necessidades específicas. Engenharia dedicada para cada projeto.</div></div>
+    <div class="feature-card"><div class="feature-icon">📋</div><div class="feature-title">Certificação NBR</div><div class="feature-text">Todos os produtos seguem as normas ABNT NBR vigentes. Ensaios realizados em laboratório próprio com rastreabilidade metrológica.</div></div>
+    <div class="feature-card"><div class="feature-icon">🚚</div><div class="feature-title">Entrega Rápida</div><div class="feature-text">Estoque de modelos padrão prontos para pronta entrega. Produção ágil para pedidos especiais com prazo garantido em contrato.</div></div>
+    <div class="feature-card"><div class="feature-icon">🔄</div><div class="feature-title">Suporte Técnico</div><div class="feature-text">Equipe técnica especializada para dimensionamento, instalação e manutenção. Garantia estendida para projetos industriais.</div></div>
+  </div>
+</section>
+
+<!-- PRODUTOS -->
+<section class="products" id="produtos">
+  <div class="section-tag orange">Linha Completa</div>
+  <h2 class="section-title">Nossos <span class="o">Produtos</span></h2>
+  <p class="section-desc">Transformadores para cada aplicação, do uso residencial ao industrial de grande porte.</p>
+  <div class="products-grid">
+
+    <div class="product-card">
+      <div class="product-visual">⚡</div>
+      <div class="product-body">
+        <div class="product-name">VC Residencial</div>
+        <div class="product-desc">Ideal para proteção e estabilização em residências e pequenos comércios.</div>
+        <div class="product-specs">
+          <div class="spec-row"><span class="spec-label">Potência</span><span class="spec-value">500 VA — 5 kVA</span></div>
+          <div class="spec-row"><span class="spec-label">Tensão</span><span class="spec-value">110V / 220V</span></div>
+          <div class="spec-row"><span class="spec-label">Frequência</span><span class="spec-value">60 Hz</span></div>
+          <div class="spec-row"><span class="spec-label">Classe</span><span class="spec-value">Isolamento B</span></div>
         </div>
-
-        <div class="card">
-            <img src="https://via.placeholder.com/300x200" alt="Transformador 20kVA">
-            <h3>Transformador 20kVA</h3>
-            <p>Trifásico 380V / 220V</p>
-            <p class="preco">R$ 2.890,00</p>
-            <a class="botao" href="https://wa.me/5511999999999?text=Olá,%20tenho%20interesse%20no%20Transformador%2020kVA" target="_blank">
-                Comprar pelo WhatsApp
-            </a>
+        <div class="product-divider"></div>
+        <div class="product-price">
+          <span class="price-label">Preço</span>
+          <span class="price-value">Sob Consulta</span>
         </div>
-
-        <div class="card">
-            <img src="https://via.placeholder.com/300x200" alt="Transformador 30kVA">
-            <h3>Transformador 30kVA</h3>
-            <p>Industrial Alta Performance</p>
-            <p class="preco">R$ 4.500,00</p>
-            <a class="botao" href="https://wa.me/5511999999999?text=Olá,%20tenho%20interesse%20no%20Transformador%2030kVA" target="_blank">
-                Comprar pelo WhatsApp
-            </a>
-        </div>
-
+        <button class="btn-product" onclick="preencherFormulario('VC Residencial')">Solicitar Orçamento</button>
+      </div>
     </div>
 
-</div>
+    <div class="product-card featured">
+      <div class="product-badge">Mais Vendido</div>
+      <div class="product-visual">🏭</div>
+      <div class="product-body">
+        <div class="product-name">VC Industrial</div>
+        <div class="product-desc">Alta performance para linhas de produção, máquinas CNC e equipamentos industriais.</div>
+        <div class="product-specs">
+          <div class="spec-row"><span class="spec-label">Potência</span><span class="spec-value">10 kVA — 500 kVA</span></div>
+          <div class="spec-row"><span class="spec-label">Tensão</span><span class="spec-value">Configurável</span></div>
+          <div class="spec-row"><span class="spec-label">Frequência</span><span class="spec-value">50 / 60 Hz</span></div>
+          <div class="spec-row"><span class="spec-label">Classe</span><span class="spec-value">Isolamento H</span></div>
+        </div>
+        <div class="product-divider"></div>
+        <div class="product-price">
+          <span class="price-label">Preço</span>
+          <span class="price-value">Sob Consulta</span>
+        </div>
+        <button class="btn-product" onclick="preencherFormulario('VC Industrial')">Solicitar Orçamento</button>
+      </div>
+    </div>
 
-<footer id="contato">
-    <p>© 2026 Transformadores Silva</p>
-    <p>WhatsApp: (11) 99999-9999</p>
+    <div class="product-card">
+      <div class="product-visual">🔬</div>
+      <div class="product-body">
+        <div class="product-name">VC Especial</div>
+        <div class="product-desc">Transformadores customizados para aplicações específicas, hospitais, data centers e telecom.</div>
+        <div class="product-specs">
+          <div class="spec-row"><span class="spec-label">Potência</span><span class="spec-value">Sob consulta</span></div>
+          <div class="spec-row"><span class="spec-label">Tensão</span><span class="spec-value">Qualquer relação</span></div>
+          <div class="spec-row"><span class="spec-label">Frequência</span><span class="spec-value">50 / 60 Hz</span></div>
+          <div class="spec-row"><span class="spec-label">Classe</span><span class="spec-value">Até F / H</span></div>
+        </div>
+        <div class="product-divider"></div>
+        <div class="product-price">
+          <span class="price-label">Preço</span>
+          <span class="price-value">Sob Consulta</span>
+        </div>
+        <button class="btn-product" onclick="preencherFormulario('VC Especial')">Solicitar Orçamento</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ESPECIFICAÇÕES -->
+<section class="specs-section" id="especificacoes">
+  <div class="section-tag orange">Dados Técnicos</div>
+  <h2 class="section-title">Especificações <span>Técnicas</span></h2>
+  <p class="section-desc">Parâmetros técnicos da linha padrão. Configurações especiais sob consulta.</p>
+  <table class="specs-table">
+    <thead>
+      <tr>
+        <th>Modelo</th><th>Potência</th><th>Tensão Primária</th><th>Tensão Secundária</th><th>Eficiência</th><th>Peso Aprox.</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>VC-500</td><td>500 VA</td><td>220V</td><td>110V</td><td>97%</td><td>3,2 kg</td></tr>
+      <tr><td>VC-1000</td><td>1 kVA</td><td>220V</td><td>110V</td><td>97,5%</td><td>5,8 kg</td></tr>
+      <tr><td>VC-3000</td><td>3 kVA</td><td>220V / 380V</td><td>110V / 220V</td><td>98%</td><td>14 kg</td></tr>
+      <tr><td>VC-10K</td><td>10 kVA</td><td>220V / 380V</td><td>Configurável</td><td>98,2%</td><td>48 kg</td></tr>
+      <tr><td>VC-50K</td><td>50 kVA</td><td>380V / 13,8 kV</td><td>Configurável</td><td>98,5%</td><td>210 kg</td></tr>
+      <tr><td>VC-ESP</td><td>Sob consulta</td><td>Qualquer</td><td>Qualquer</td><td>≥ 98%</td><td>—</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- CONTATO -->
+<section class="contact" id="contato">
+  <div class="section-tag">Fale Conosco</div>
+  <h2 class="section-title">Solicite seu <span>Orçamento</span></h2>
+  <p class="section-desc">Preencha o formulário e nossa equipe técnica entrará em contato em até 24 horas.</p>
+
+  <div class="contact-wrapper">
+    <div class="contact-info">
+      <div class="contact-item">
+        <div class="contact-icon">📍</div>
+        <div>
+          <div class="contact-item-title">Endereço</div>
+          <div class="contact-item-text">Rua das Indústrias, 1000<br>Distrito Industrial — Sua Cidade, XX</div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">📞</div>
+        <div>
+          <div class="contact-item-title">Telefone</div>
+          <div class="contact-item-text">(00) 0000-0000<br>(00) 9 0000-0000</div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">✉️</div>
+        <div>
+          <div class="contact-item-title">E-mail</div>
+          <div class="contact-item-text">vendas@voltcore.com.br<br>projetos@voltcore.com.br</div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">🕐</div>
+        <div>
+          <div class="contact-item-title">Horário</div>
+          <div class="contact-item-text">Segunda a Sexta: 8h — 18h<br>Sábado: 8h — 12h</div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon wa">💬</div>
+        <div>
+          <div class="contact-item-title wa">WhatsApp</div>
+          <div class="contact-item-text">
+            <a href="https://wa.me/5500000000000?text=Ol%C3%A1!%20Gostaria%20de%20solicitar%20um%20or%C3%A7amento%20de%20transformadores." target="_blank" style="color:#25d366;text-decoration:none;font-weight:600;">
+              Clique aqui para conversar →
+            </a><br>
+            <span style="font-size:12px;color:var(--dim);">Atendimento rápido via WhatsApp</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <form class="form" onsubmit="submitForm(event)">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Nome *</label>
+            <input class="form-input" type="text" id="nome" placeholder="Seu nome" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Empresa</label>
+            <input class="form-input" type="text" id="empresa" placeholder="Nome da empresa">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">E-mail *</label>
+            <input class="form-input" type="email" id="email" placeholder="seu@email.com" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Telefone</label>
+            <input class="form-input" type="tel" id="telefone" placeholder="(00) 00000-0000">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Produto de Interesse</label>
+          <select class="form-select" id="produto">
+            <option value="">Selecione um produto</option>
+            <option value="VC Residencial">VC Residencial (500 VA — 5 kVA)</option>
+            <option value="VC Industrial">VC Industrial (10 kVA — 500 kVA)</option>
+            <option value="VC Especial">VC Especial (Customizado)</option>
+            <option value="Outro">Outro / Não sei ainda</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Mensagem / Detalhes do Projeto</label>
+          <textarea class="form-textarea" id="mensagem" placeholder="Descreva sua necessidade: potência, tensão, quantidade, aplicação..."></textarea>
+        </div>
+        <button type="submit" class="form-submit">⚡ Enviar Solicitação</button>
+      </form>
+      <div class="form-success" id="formSuccess">
+        ✓ SOLICITAÇÃO ENVIADA COM SUCESSO!<br>
+        Nossa equipe entrará em contato em até 24 horas.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="footer-logo">VOLT<span>CORE</span></div>
+    <div style="margin-top:6px;font-size:13px;color:var(--dim);">Transformadores Elétricos de Alta Performance</div>
+  </div>
+  <div class="footer-line">© 2025 VoltCore · Todos os direitos reservados</div>
 </footer>
 
+<!-- WHATSAPP FLOAT -->
+<a class="wa-float" href="https://wa.me/5500000000000?text=Ol%C3%A1!%20Gostaria%20de%20solicitar%20um%20or%C3%A7amento%20de%20transformadores." target="_blank">
+  <svg viewBox="0 0 24 24" fill="currentColor" style="width:22px;height:22px;flex-shrink:0"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  Falar no WhatsApp
+</a>
+
+<script>
+// WhatsApp number — troque pelo número real com código do país (ex: 5541999999999)
+const WA_NUMBER = '5500000000000';
+
+function preencherFormulario(produto) {
+  document.getElementById('contato').scrollIntoView({ behavior: 'smooth' });
+  setTimeout(() => {
+    const select = document.getElementById('produto');
+    for (let i = 0; i < select.options.length; i++) {
+      if (select.options[i].value === produto) { select.selectedIndex = i; break; }
+    }
+  }, 600);
+}
+
+function submitForm(e) {
+  e.preventDefault();
+  const nome     = document.getElementById('nome').value;
+  const email    = document.getElementById('email').value;
+  const empresa  = document.getElementById('empresa').value;
+  const telefone = document.getElementById('telefone').value;
+  const produto  = document.getElementById('produto').value;
+  const mensagem = document.getElementById('mensagem').value;
+  const subject  = encodeURIComponent(`Orçamento VoltCore — ${produto || 'Consulta Geral'}`);
+  const body     = encodeURIComponent(`Nome: ${nome}\nEmpresa: ${empresa}\nE-mail: ${email}\nTelefone: ${telefone}\nProduto: ${produto}\n\nMensagem:\n${mensagem}`);
+  window.location.href = `mailto:vendas@voltcore.com.br?subject=${subject}&body=${body}`;
+  document.querySelector('.form').style.display = 'none';
+  document.getElementById('formSuccess').style.display = 'block';
+  setTimeout(() => {
+    document.querySelector('.form').style.display = 'flex';
+    document.getElementById('formSuccess').style.display = 'none';
+    document.querySelector('.form').reset();
+  }, 5000);
+}
+
+// Update all WA links dynamically
+document.querySelectorAll('a[href*="wa.me"]').forEach(a => {
+  a.href = `https://wa.me/${WA_NUMBER}?text=Ol%C3%A1!%20Gostaria%20de%20solicitar%20um%20or%C3%A7amento%20de%20transformadores.`;
+});
+
+// Scroll animations
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.style.opacity = '1';
+      entry.target.style.transform = 'translateY(0)';
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.feature-card, .product-card').forEach(el => {
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(30px)';
+  el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+  observer.observe(el);
+});
+</script>
 </body>
 </html>
